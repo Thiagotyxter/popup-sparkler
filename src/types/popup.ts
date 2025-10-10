@@ -10,11 +10,6 @@ export type PopupState = {
   applyCoupon: boolean;
   coupon: {
     code: string;
-    copyLabel: string;
-    autoCopyOnClick: boolean;
-    uppercase: boolean;
-    showSavingsText: boolean;
-    savingsText: string;
   };
 
   behavior: {
@@ -40,11 +35,6 @@ export const defaultPopupState: PopupState = {
   applyCoupon: true,
   coupon: {
     code: "TYXTER10",
-    copyLabel: "Clique para copiar",
-    autoCopyOnClick: true,
-    uppercase: true,
-    showSavingsText: true,
-    savingsText: "Você economiza R$65",
   },
   behavior: {
     showAfterSeconds: 5,

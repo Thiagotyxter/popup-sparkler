@@ -35,20 +35,6 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subtitle" className="text-sm font-medium">
-              Subtítulo
-            </Label>
-            <Textarea
-              id="subtitle"
-              value={state.subtitle}
-              onChange={(e) => onChange({ subtitle: e.target.value })}
-              placeholder="Use o cupom abaixo e finalize sua compra agora."
-              rows={3}
-              className="rounded-md resize-none"
-            />
-          </div>
-
-          <div className="space-y-2">
             <Label htmlFor="image-url" className="text-sm font-medium">
               URL da Imagem
             </Label>
@@ -59,34 +45,6 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
               placeholder="https://exemplo.com/imagem.jpg"
               className="rounded-md"
             />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="price-original" className="text-sm font-medium">
-                Preço do produto
-              </Label>
-              <Input
-                id="price-original"
-                value={state.priceOriginal}
-                onChange={(e) => onChange({ priceOriginal: e.target.value })}
-                placeholder="R$ 209,80"
-                className="rounded-md"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="price-discount" className="text-sm font-medium">
-                Preço com desconto
-              </Label>
-              <Input
-                id="price-discount"
-                value={state.priceDiscount}
-                onChange={(e) => onChange({ priceDiscount: e.target.value })}
-                placeholder="R$ 144,80"
-                className="rounded-md"
-              />
-            </div>
           </div>
 
           <div className="space-y-2">
