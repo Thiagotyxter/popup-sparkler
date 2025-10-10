@@ -155,9 +155,9 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 style={
                   purchaseType === "one-time"
                     ? { 
-                        backgroundColor: "#ffffff",
-                        color: "#000000",
-                        borderColor: "#e5e7eb"
+                        backgroundColor: "#10b981",
+                        color: "#ffffff",
+                        border: "none"
                       }
                     : {}
                 }
@@ -167,11 +167,13 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
               </Button>
               <Button
                 variant={purchaseType === "subscription" ? "default" : "outline"}
-                className="flex-1 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white border-0"
+                className="flex-1 rounded-lg"
                 style={
                   purchaseType === "subscription"
                     ? { 
                         backgroundColor: "#10b981",
+                        color: "#ffffff",
+                        border: "none"
                       }
                     : {}
                 }
