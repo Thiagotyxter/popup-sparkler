@@ -173,7 +173,3 @@ PopupPreview (recebe estado via props, read-only)
 - Todas as cores usam hex codes (compatível com color pickers nativos)
 - O sistema é totalmente type-safe (TypeScript)
 - Layout segue boas práticas de acessibilidade (aria-labels, roles)
-
-**Contato para dúvidas**: [Seu contato aqui]
-
-Como conectar ao GitHub
