@@ -1,9 +1,12 @@
-import { PopupState } from "@/types/popup";
+import { PopupState, QuantityOption, SubscriptionPlan } from "@/types/popup";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Plus, Trash2 } from "lucide-react";
 import { CouponAccordion } from "./CouponAccordion";
 
 const FONT_OPTIONS = [
@@ -36,10 +39,11 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
   return (
     <div className="h-full overflow-y-auto">
       <Tabs defaultValue="content" className="w-full">
-        <TabsList className="w-full grid grid-cols-3 mb-6">
+        <TabsList className="w-full grid grid-cols-4 mb-6">
           <TabsTrigger value="content">Conteúdo</TabsTrigger>
+          <TabsTrigger value="kits">Kits</TabsTrigger>
           <TabsTrigger value="coupon">Cupom</TabsTrigger>
-          <TabsTrigger value="styles">Cores & Tipografia</TabsTrigger>
+          <TabsTrigger value="styles">Estilos</TabsTrigger>
         </TabsList>
 
         <TabsContent value="content" className="space-y-6">
@@ -116,6 +120,303 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
               className="rounded-md"
             />
           </div>
+        </TabsContent>
+
+        <TabsContent value="kits" className="space-y-6">
+          {/* Variantes de Assinatura */}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <Label className="text-base font-semibold">Variantes de Assinatura</Label>
+              <Switch
+                checked={state.enableSubscription}
+                onCheckedChange={(checked) => onChange({ enableSubscription: checked })}
+              />
+            </div>
+            {state.enableSubscription && (
+              <p className="text-sm text-muted-foreground">
+                Permite que o cliente escolha entre compra única ou assinatura.
+              </p>
+            )}
+          </div>
+
+          {state.enableSubscription && (
+            <>
+              {/* Opção de Compra Única */}
+              <div className="space-y-4 border-t pt-4">
+                <div className="flex items-center justify-between">
+                  <Label className="text-base font-semibold">Opção de Compra Única</Label>
+                  <Switch
+                    checked={state.enableOneTimePurchase}
+                    onCheckedChange={(checked) => onChange({ enableOneTimePurchase: checked })}
+                  />
+                </div>
+              </div>
+
+              {/* Opções de Quantidade (Kits) */}
+              {state.enableOneTimePurchase && (
+                <div className="space-y-4 border-t pt-4">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base font-semibold">Opções de Quantidade</Label>
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        const newOption: QuantityOption = {
+                          id: Math.random().toString(36).substring(7),
+                          quantity: 1,
+                          price: "",
+                          discount: "",
+                          checkoutUrl: "",
+                        };
+                        onChange({
+                          quantityOptions: [...state.quantityOptions, newOption],
+                        });
+                      }}
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Adicionar
+                    </Button>
+                  </div>
+
+                  {state.quantityOptions.map((option, index) => (
+                    <div key={option.id} className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-sm">Opção {index + 1}</span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            onChange({
+                              quantityOptions: state.quantityOptions.filter((_, i) => i !== index),
+                            });
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-3">
+                        <div className="space-y-2">
+                          <Label className="text-xs">Qtd</Label>
+                          <Input
+                            type="number"
+                            value={option.quantity}
+                            onChange={(e) => {
+                              const updated = [...state.quantityOptions];
+                              updated[index] = {
+                                ...updated[index],
+                                quantity: parseInt(e.target.value) || 1,
+                              };
+                              onChange({ quantityOptions: updated });
+                            }}
+                            min="1"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-xs">Preço (R$)</Label>
+                          <Input
+                            value={option.price}
+                            onChange={(e) => {
+                              const updated = [...state.quantityOptions];
+                              updated[index] = {
+                                ...updated[index],
+                                price: e.target.value,
+                              };
+                              onChange({ quantityOptions: updated });
+                            }}
+                            placeholder="0,00"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label className="text-xs">Desconto</Label>
+                          <Input
+                            value={option.discount}
+                            onChange={(e) => {
+                              const updated = [...state.quantityOptions];
+                              updated[index] = {
+                                ...updated[index],
+                                discount: e.target.value,
+                              };
+                              onChange({ quantityOptions: updated });
+                            }}
+                            placeholder="+10%OFF"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label className="text-xs">URL de Checkout</Label>
+                        <Input
+                          value={option.checkoutUrl}
+                          onChange={(e) => {
+                            const updated = [...state.quantityOptions];
+                            updated[index] = {
+                              ...updated[index],
+                              checkoutUrl: e.target.value,
+                            };
+                            onChange({ quantityOptions: updated });
+                          }}
+                          placeholder="URL para esta quantidade"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Planos de Assinatura */}
+              <div className="space-y-4 border-t pt-4">
+                <div className="flex items-center justify-between">
+                  <Label className="text-base font-semibold">Planos de Assinatura</Label>
+                  <div className="flex items-center gap-2">
+                    <Switch
+                      checked={state.enableSubscriptionPlans}
+                      onCheckedChange={(checked) => onChange({ enableSubscriptionPlans: checked })}
+                    />
+                    {state.enableSubscriptionPlans && (
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={() => {
+                          const newPlan: SubscriptionPlan = {
+                            id: Math.random().toString(36).substring(7),
+                            name: "",
+                            price: "",
+                            interval: "Mês(es)",
+                            intervalCount: 1,
+                            checkoutUrl: "",
+                          };
+                          onChange({
+                            subscriptionPlans: [...state.subscriptionPlans, newPlan],
+                          });
+                        }}
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        Adicionar Plano
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {state.enableSubscriptionPlans && state.subscriptionPlans.map((plan, index) => (
+                  <div key={plan.id} className="border rounded-lg p-4 space-y-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-sm">Plano {index + 1}</span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          onChange({
+                            subscriptionPlans: state.subscriptionPlans.filter((_, i) => i !== index),
+                          });
+                        }}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-2">
+                        <Label className="text-xs">Nome do Plano</Label>
+                        <Input
+                          value={plan.name}
+                          onChange={(e) => {
+                            const updated = [...state.subscriptionPlans];
+                            updated[index] = {
+                              ...updated[index],
+                              name: e.target.value,
+                            };
+                            onChange({ subscriptionPlans: updated });
+                          }}
+                          placeholder="Mensal"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs">Preço (R$)</Label>
+                        <Input
+                          value={plan.price}
+                          onChange={(e) => {
+                            const updated = [...state.subscriptionPlans];
+                            updated[index] = {
+                              ...updated[index],
+                              price: e.target.value,
+                            };
+                            onChange({ subscriptionPlans: updated });
+                          }}
+                          placeholder="39.90"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-2">
+                        <Label className="text-xs">Intervalo</Label>
+                        <Select
+                          value={plan.interval}
+                          onValueChange={(value) => {
+                            const updated = [...state.subscriptionPlans];
+                            updated[index] = {
+                              ...updated[index],
+                              interval: value,
+                            };
+                            onChange({ subscriptionPlans: updated });
+                          }}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Mês(es)">Mês(es)</SelectItem>
+                            <SelectItem value="Ano(s)">Ano(s)</SelectItem>
+                            <SelectItem value="Semana(s)">Semana(s)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-xs">A cada</Label>
+                        <Input
+                          type="number"
+                          value={plan.intervalCount}
+                          onChange={(e) => {
+                            const updated = [...state.subscriptionPlans];
+                            updated[index] = {
+                              ...updated[index],
+                              intervalCount: parseInt(e.target.value) || 1,
+                            };
+                            onChange({ subscriptionPlans: updated });
+                          }}
+                          min="1"
+                          placeholder="1"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-xs">URL de Checkout</Label>
+                      <Input
+                        value={plan.checkoutUrl}
+                        onChange={(e) => {
+                          const updated = [...state.subscriptionPlans];
+                          updated[index] = {
+                            ...updated[index],
+                            checkoutUrl: e.target.value,
+                          };
+                          onChange({ subscriptionPlans: updated });
+                        }}
+                        placeholder="URL para este plano"
+                      />
+                    </div>
+
+                    <div className="text-xs text-muted-foreground bg-muted/30 p-2 rounded">
+                      Preview: {plan.name || "Nome do Plano"} - R$ {plan.price || "0.00"} a cada {plan.intervalCount} {plan.interval.toLowerCase()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </TabsContent>
 
         <TabsContent value="coupon" className="space-y-4">

@@ -1,3 +1,20 @@
+export type QuantityOption = {
+  id: string;
+  quantity: number;
+  price: string;
+  discount: string;
+  checkoutUrl: string;
+};
+
+export type SubscriptionPlan = {
+  id: string;
+  name: string;
+  price: string;
+  interval: string;
+  intervalCount: number;
+  checkoutUrl: string;
+};
+
 export type PopupState = {
   title: string;
   subtitle: string;
@@ -11,6 +28,13 @@ export type PopupState = {
   coupon: {
     code: string;
   };
+
+  // Kits e Assinaturas
+  enableSubscription: boolean;
+  enableOneTimePurchase: boolean;
+  quantityOptions: QuantityOption[];
+  enableSubscriptionPlans: boolean;
+  subscriptionPlans: SubscriptionPlan[];
 
   behavior: {
     showAfterSeconds: number;
@@ -54,6 +78,11 @@ export const defaultPopupState: PopupState = {
   coupon: {
     code: "TYXTER10",
   },
+  enableSubscription: false,
+  enableOneTimePurchase: true,
+  quantityOptions: [],
+  enableSubscriptionPlans: false,
+  subscriptionPlans: [],
   behavior: {
     showAfterSeconds: 5,
   },

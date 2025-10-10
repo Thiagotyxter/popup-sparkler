@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { PopupState } from "@/types/popup";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface PopupPreviewProps {
   state: PopupState;
@@ -10,6 +12,11 @@ interface PopupPreviewProps {
 export const PopupPreview = ({ state }: PopupPreviewProps) => {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [purchaseType, setPurchaseType] = useState<"one-time" | "subscription">(
+    state.enableOneTimePurchase ? "one-time" : "subscription"
+  );
+  const [selectedQuantity, setSelectedQuantity] = useState(state.quantityOptions[0]?.id || "");
+  const [selectedPlan, setSelectedPlan] = useState(state.subscriptionPlans[0]?.id || "");
 
   const handleCopy = () => {
     navigator.clipboard.writeText(state.coupon.code);
@@ -18,12 +25,35 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
   };
 
   const handleCtaClick = () => {
-    if (!state.ctaUrl) return;
+    let url = state.ctaUrl;
+    
+    if (state.enableSubscription) {
+      if (purchaseType === "one-time" && selectedQuantity) {
+        const option = state.quantityOptions.find(o => o.id === selectedQuantity);
+        url = option?.checkoutUrl || state.ctaUrl;
+      } else if (purchaseType === "subscription" && selectedPlan) {
+        const plan = state.subscriptionPlans.find(p => p.id === selectedPlan);
+        url = plan?.checkoutUrl || state.ctaUrl;
+      }
+    }
+    
+    if (!url) return;
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
-      window.open(state.ctaUrl, "_blank");
+      window.open(url, "_blank");
     }, 800);
+  };
+
+  const getCurrentPrice = () => {
+    if (state.enableSubscription && purchaseType === "one-time" && selectedQuantity) {
+      const option = state.quantityOptions.find(o => o.id === selectedQuantity);
+      return option?.price ? `R$ ${option.price}` : state.priceDiscount;
+    } else if (state.enableSubscription && purchaseType === "subscription" && selectedPlan) {
+      const plan = state.subscriptionPlans.find(p => p.id === selectedPlan);
+      return plan?.price ? `R$ ${plan.price}` : state.priceDiscount;
+    }
+    return state.priceDiscount;
   };
 
 
@@ -113,11 +143,96 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
         </div>
       )}
 
+      {/* Purchase Options */}
+      {state.enableSubscription && (
+        <div className="px-6 pb-4 space-y-3">
+          {/* Purchase Type Buttons */}
+          {state.enableOneTimePurchase && state.enableSubscriptionPlans && (
+            <div className="flex gap-2">
+              <Button
+                variant={purchaseType === "one-time" ? "default" : "outline"}
+                className="flex-1 rounded-lg"
+                style={
+                  purchaseType === "one-time"
+                    ? { backgroundColor: state.customColors.ctaBackground }
+                    : {}
+                }
+                onClick={() => setPurchaseType("one-time")}
+              >
+                Compre uma vez
+              </Button>
+              <Button
+                variant={purchaseType === "subscription" ? "default" : "outline"}
+                className="flex-1 rounded-lg"
+                style={
+                  purchaseType === "subscription"
+                    ? { backgroundColor: state.customColors.ctaBackground }
+                    : {}
+                }
+                onClick={() => setPurchaseType("subscription")}
+              >
+                Assine e economize
+              </Button>
+            </div>
+          )}
+
+          {/* Quantity Selector */}
+          {purchaseType === "one-time" && state.quantityOptions.length > 0 && (
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Quantidade:</Label>
+              <Select value={selectedQuantity} onValueChange={setSelectedQuantity}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione a quantidade" />
+                </SelectTrigger>
+                <SelectContent>
+                  {state.quantityOptions.map((option) => (
+                    <SelectItem key={option.id} value={option.id}>
+                      {option.quantity} UNIDADE{option.quantity > 1 ? "S" : ""} {option.discount && `(${option.discount})`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* Subscription Plan Selector */}
+          {purchaseType === "subscription" && state.subscriptionPlans.length > 0 && (
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Plano:</Label>
+              <Select value={selectedPlan} onValueChange={setSelectedPlan}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecione o plano" />
+                </SelectTrigger>
+                <SelectContent>
+                  {state.subscriptionPlans.map((plan) => (
+                    <SelectItem key={plan.id} value={plan.id}>
+                      {plan.name} - R$ {plan.price}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Pricing */}
       <div className="px-6 pb-4">
-        <div className="flex items-baseline gap-3">
-          <span className="text-muted line-through text-sm">{state.priceOriginal}</span>
-          <span className="text-ink font-bold text-2xl">{state.priceDiscount}</span>
+        <div className="space-y-1">
+          <div className="flex items-baseline gap-3">
+            <span className="text-muted line-through text-sm">{state.priceOriginal}</span>
+            <span className="text-ink font-bold text-2xl">{getCurrentPrice()}</span>
+          </div>
+          {state.enableSubscription && purchaseType === "one-time" && selectedQuantity && (
+            <p className="text-xs text-muted-foreground">
+              {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade
+            </p>
+          )}
+          {state.enableSubscription && purchaseType === "subscription" && selectedPlan && (
+            <p className="text-xs text-muted-foreground">
+              por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
+            </p>
+          )}
         </div>
       </div>
 
