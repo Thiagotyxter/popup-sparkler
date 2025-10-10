@@ -47,7 +47,7 @@ export const CouponAccordion = ({ state, onChange }: CouponAccordionProps) => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="price-original" className="text-sm font-medium">
-                Preço do produto
+                De
               </Label>
               <Input
                 id="price-original"
@@ -60,7 +60,7 @@ export const CouponAccordion = ({ state, onChange }: CouponAccordionProps) => {
 
             <div className="space-y-2">
               <Label htmlFor="price-discount" className="text-sm font-medium">
-                Preço com desconto
+                Por
               </Label>
               <Input
                 id="price-discount"
