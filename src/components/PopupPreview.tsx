@@ -35,15 +35,7 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {/* Headline */}
       <div className="p-6 pb-4">
         <h2 className="font-display font-extrabold text-2xl md:text-3xl leading-tight text-ink">
-          {state.title.split("R$").map((part, idx) =>
-            idx === 0 ? (
-              part
-            ) : (
-              <span key={idx} className="text-primary">
-                R${part}
-              </span>
-            )
-          )}
+          {state.title}
         </h2>
         <p className="mt-3 text-muted text-base md:text-lg leading-relaxed">{state.subtitle}</p>
       </div>
