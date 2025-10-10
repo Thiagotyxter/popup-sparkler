@@ -143,12 +143,17 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
                       })
                     }
                   >
-                    <SelectTrigger id="title-font">
+                    <SelectTrigger id="title-font" className="h-12" style={{ fontFamily: state.typography.title.fontFamily }}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="max-h-[300px]">
                       {FONT_OPTIONS.map((font) => (
-                        <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                        <SelectItem 
+                          key={font} 
+                          value={font} 
+                          className="h-10 text-base cursor-pointer"
+                          style={{ fontFamily: font }}
+                        >
                           {font}
                         </SelectItem>
                       ))}
@@ -158,20 +163,23 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
 
                 <div className="space-y-2">
                   <Label htmlFor="title-size" className="text-sm font-medium">
-                    Tamanho
+                    Tamanho (px)
                   </Label>
                   <Input
                     id="title-size"
-                    value={state.typography.title.fontSize}
+                    type="number"
+                    value={parseInt(state.typography.title.fontSize)}
                     onChange={(e) =>
                       onChange({
                         typography: {
                           ...state.typography,
-                          title: { ...state.typography.title, fontSize: e.target.value },
+                          title: { ...state.typography.title, fontSize: `${e.target.value}px` },
                         },
                       })
                     }
-                    placeholder="28px"
+                    placeholder="28"
+                    min="8"
+                    max="100"
                     className="rounded-md"
                   />
                 </div>
@@ -231,12 +239,17 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
                       })
                     }
                   >
-                    <SelectTrigger id="subtitle-font">
+                    <SelectTrigger id="subtitle-font" className="h-12" style={{ fontFamily: state.typography.subtitle.fontFamily }}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="max-h-[300px]">
                       {FONT_OPTIONS.map((font) => (
-                        <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                        <SelectItem 
+                          key={font} 
+                          value={font} 
+                          className="h-10 text-base cursor-pointer"
+                          style={{ fontFamily: font }}
+                        >
                           {font}
                         </SelectItem>
                       ))}
@@ -246,20 +259,23 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
 
                 <div className="space-y-2">
                   <Label htmlFor="subtitle-size" className="text-sm font-medium">
-                    Tamanho
+                    Tamanho (px)
                   </Label>
                   <Input
                     id="subtitle-size"
-                    value={state.typography.subtitle.fontSize}
+                    type="number"
+                    value={parseInt(state.typography.subtitle.fontSize)}
                     onChange={(e) =>
                       onChange({
                         typography: {
                           ...state.typography,
-                          subtitle: { ...state.typography.subtitle, fontSize: e.target.value },
+                          subtitle: { ...state.typography.subtitle, fontSize: `${e.target.value}px` },
                         },
                       })
                     }
-                    placeholder="16px"
+                    placeholder="16"
+                    min="8"
+                    max="100"
                     className="rounded-md"
                   />
                 </div>
