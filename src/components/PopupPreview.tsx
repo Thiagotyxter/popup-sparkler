@@ -83,36 +83,34 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {state.applyCoupon && state.coupon.code && (
         <div className="px-6 pb-4">
           <div
-            className="rounded-md p-4 cursor-pointer transition-all duration-200 hover:shadow-hover group text-center"
+            className="rounded-md p-3 cursor-pointer transition-all duration-200 hover:shadow-hover group"
             style={{ backgroundColor: state.customColors.couponBackground }}
             onClick={state.coupon.autoCopyOnClick ? handleCopyCoupon : undefined}
             role="button"
             tabIndex={0}
             aria-label={`Cupom: ${state.coupon.code}`}
           >
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-full">
-                <p 
-                  className="text-xs mb-1 opacity-70"
-                  style={{ color: getContrastColor(state.customColors.couponBackground) }}
-                >
-                  {state.coupon.copyLabel}
-                </p>
-                <p
-                  className={`font-display font-bold text-lg tracking-wide ${
-                    state.coupon.uppercase ? "uppercase" : ""
-                  }`}
-                  style={{ color: getContrastColor(state.customColors.couponBackground) }}
-                >
-                  {state.coupon.code}
-                </p>
-              </div>
+            <div className="flex items-center justify-between gap-3">
+              <p 
+                className="text-xs opacity-70 flex-shrink-0"
+                style={{ color: getContrastColor(state.customColors.couponBackground) }}
+              >
+                {state.coupon.copyLabel}
+              </p>
+              <p
+                className={`font-display font-bold text-lg tracking-wide flex-1 text-center ${
+                  state.coupon.uppercase ? "uppercase" : ""
+                }`}
+                style={{ color: getContrastColor(state.customColors.couponBackground) }}
+              >
+                {state.coupon.code}
+              </p>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCopyCoupon();
                 }}
-                className="p-2 rounded-md hover:bg-black/10 transition-colors"
+                className="p-2 rounded-md hover:bg-black/10 transition-colors flex-shrink-0"
                 aria-label="Copiar cupom"
               >
                 {copied ? (
@@ -130,7 +128,7 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
             </div>
             {copied && (
               <p
-                className="text-xs font-medium mt-2 animate-in fade-in slide-in-from-bottom-1"
+                className="text-xs font-medium mt-2 text-center animate-in fade-in slide-in-from-bottom-1"
                 style={{ color: getContrastColor(state.customColors.couponBackground) }}
                 role="status"
                 aria-live="polite"
