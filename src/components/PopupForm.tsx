@@ -3,7 +3,29 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CouponAccordion } from "./CouponAccordion";
+
+const FONT_OPTIONS = [
+  "Abel", "Abril Fatface", "Alegreya", "Alegreya Sans", "Amatic SC", "Arvo",
+  "Barlow", "Barlow Condensed", "Barlow Semi Condensed", "Bellefair", "Belleza",
+  "Bitter", "Cabin", "Cagliostro", "Cardo", "Cormorant", "Cormorant Garamond",
+  "Cormorant Infant", "Cormorant SC", "Cormorant Upright", "Crimson Text",
+  "DM Serif Display", "DM Serif Text", "EB Garamond", "Exo", "Exo 2",
+  "Fira Code", "Fira Mono", "Fira Sans", "Francois One", "Gentium Book Basic",
+  "Halant", "Hind", "Hind Guntur", "Hind Madurai", "IM Fell DW Pica",
+  "IM Fell English", "IM Fell French Canon", "IM Fell French Canon SC",
+  "IM Fell Great Primer", "IM Fell Great Primer SC", "Inconsolata", "Inknut Antiqua",
+  "Inter", "Inter Tight", "Italiana", "Josefin Sans", "Josefin Slab", "Jura",
+  "Karla", "Lato", "Libre Baskerville", "Libre Franklin", "Lobster", "Lora",
+  "M PLUS 1p", "Marcellus", "Marcellus SC", "Martel", "Martel Sans",
+  "Merriweather", "Merriweather Sans", "Montserrat", "Montserrat Alternates",
+  "Montserrat Subrayada", "Neuton", "Noto Sans", "Noto Serif", "Old Standard TT",
+  "Open Sans", "Oswald", "Overpass", "Poppins", "PT Serif", "PT Serif Caption",
+  "Quicksand", "Raleway", "Rasa", "Roboto", "Roboto Condensed", "Roboto Slab",
+  "Rubik", "Rubik Mono One", "Satisfy", "Spectral", "Spectral SC", "Tinos",
+  "Ubuntu", "Vollkorn", "Vollkorn SC", "Work Sans", "Zilla Slab"
+];
 
 interface PopupFormProps {
   state: PopupState;
@@ -101,7 +123,188 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
         </TabsContent>
 
         <TabsContent value="styles" className="space-y-6">
+          {/* Typography Section */}
+          <div className="space-y-6">
+            <div className="border-b pb-4">
+              <h3 className="text-base font-semibold mb-4">Tipografia do Título</h3>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="title-font" className="text-sm font-medium">
+                    Fonte
+                  </Label>
+                  <Select
+                    value={state.typography.title.fontFamily}
+                    onValueChange={(value) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          title: { ...state.typography.title, fontFamily: value },
+                        },
+                      })
+                    }
+                  >
+                    <SelectTrigger id="title-font">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      {FONT_OPTIONS.map((font) => (
+                        <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          {font}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="title-size" className="text-sm font-medium">
+                    Tamanho
+                  </Label>
+                  <Input
+                    id="title-size"
+                    value={state.typography.title.fontSize}
+                    onChange={(e) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          title: { ...state.typography.title, fontSize: e.target.value },
+                        },
+                      })
+                    }
+                    placeholder="28px"
+                    className="rounded-md"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="title-color" className="text-sm font-medium">
+                    Cor
+                  </Label>
+                  <div className="flex gap-3 items-center">
+                    <input
+                      id="title-color"
+                      type="color"
+                      value={state.typography.title.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            title: { ...state.typography.title, color: e.target.value },
+                          },
+                        })
+                      }
+                      className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                    />
+                    <Input
+                      value={state.typography.title.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            title: { ...state.typography.title, color: e.target.value },
+                          },
+                        })
+                      }
+                      placeholder="#111111"
+                      className="flex-1 rounded-md"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-b pb-4">
+              <h3 className="text-base font-semibold mb-4">Tipografia do Subtítulo</h3>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="subtitle-font" className="text-sm font-medium">
+                    Fonte
+                  </Label>
+                  <Select
+                    value={state.typography.subtitle.fontFamily}
+                    onValueChange={(value) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          subtitle: { ...state.typography.subtitle, fontFamily: value },
+                        },
+                      })
+                    }
+                  >
+                    <SelectTrigger id="subtitle-font">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      {FONT_OPTIONS.map((font) => (
+                        <SelectItem key={font} value={font} style={{ fontFamily: font }}>
+                          {font}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subtitle-size" className="text-sm font-medium">
+                    Tamanho
+                  </Label>
+                  <Input
+                    id="subtitle-size"
+                    value={state.typography.subtitle.fontSize}
+                    onChange={(e) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          subtitle: { ...state.typography.subtitle, fontSize: e.target.value },
+                        },
+                      })
+                    }
+                    placeholder="16px"
+                    className="rounded-md"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="subtitle-color" className="text-sm font-medium">
+                    Cor
+                  </Label>
+                  <div className="flex gap-3 items-center">
+                    <input
+                      id="subtitle-color"
+                      type="color"
+                      value={state.typography.subtitle.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            subtitle: { ...state.typography.subtitle, color: e.target.value },
+                          },
+                        })
+                      }
+                      className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                    />
+                    <Input
+                      value={state.typography.subtitle.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            subtitle: { ...state.typography.subtitle, color: e.target.value },
+                          },
+                        })
+                      }
+                      placeholder="#666666"
+                      className="flex-1 rounded-md"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Colors Section */}
           <div className="space-y-4">
+            <h3 className="text-base font-semibold mb-4">Cores</h3>
             <div className="space-y-2">
               <Label htmlFor="popup-bg" className="text-sm font-medium">
                 Cor de fundo do popup

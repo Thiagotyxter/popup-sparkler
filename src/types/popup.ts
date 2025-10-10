@@ -22,6 +22,19 @@ export type PopupState = {
     couponBackground: string;
     couponTextColor: string;
   };
+
+  typography: {
+    title: {
+      fontFamily: string;
+      fontSize: string;
+      color: string;
+    };
+    subtitle: {
+      fontFamily: string;
+      fontSize: string;
+      color: string;
+    };
+  };
 };
 
 export const defaultPopupState: PopupState = {
@@ -44,5 +57,17 @@ export const defaultPopupState: PopupState = {
     ctaBackground: "#2C928A",
     couponBackground: "#FEF3C7",
     couponTextColor: "#92400E",
+  },
+  typography: {
+    title: {
+      fontFamily: "Montserrat",
+      fontSize: "28px",
+      color: "#111111",
+    },
+    subtitle: {
+      fontFamily: "Inter",
+      fontSize: "16px",
+      color: "#666666",
+    },
   },
 };

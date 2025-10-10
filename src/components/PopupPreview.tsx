@@ -34,10 +34,26 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
     >
       {/* Headline */}
       <div className="p-6 pb-4">
-        <h2 className="font-display font-extrabold text-2xl md:text-3xl leading-tight text-ink">
+        <h2 
+          className="font-extrabold leading-tight"
+          style={{
+            fontFamily: state.typography.title.fontFamily,
+            fontSize: state.typography.title.fontSize,
+            color: state.typography.title.color,
+          }}
+        >
           {state.title}
         </h2>
-        <p className="mt-3 text-muted text-base md:text-lg leading-relaxed">{state.subtitle}</p>
+        <p 
+          className="mt-3 leading-relaxed"
+          style={{
+            fontFamily: state.typography.subtitle.fontFamily,
+            fontSize: state.typography.subtitle.fontSize,
+            color: state.typography.subtitle.color,
+          }}
+        >
+          {state.subtitle}
+        </p>
       </div>
 
       {/* Image */}
