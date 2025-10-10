@@ -85,7 +85,14 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
               <span className="text-xs font-medium flex-shrink-0">
                 Clique para copiar
               </span>
-              <div className="text-2xl font-bold tracking-wider text-center flex-1">
+              <div 
+                className="font-bold tracking-wider text-center flex-1"
+                style={{
+                  fontFamily: state.typography.coupon.fontFamily,
+                  fontSize: state.typography.coupon.fontSize,
+                  color: state.typography.coupon.color,
+                }}
+              >
                 {state.coupon.code.toUpperCase()}
               </div>
               <button
@@ -97,9 +104,9 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 aria-label="Copiar código"
               >
                 {copied ? (
-                  <Check className="w-5 h-5" style={{ color: state.customColors.couponTextColor }} />
+                  <Check className="w-5 h-5" style={{ color: state.typography.coupon.color }} />
                 ) : (
-                  <Copy className="w-5 h-5" style={{ color: state.customColors.couponTextColor }} />
+                  <Copy className="w-5 h-5" style={{ color: state.typography.coupon.color }} />
                 )}
               </button>
             </div>

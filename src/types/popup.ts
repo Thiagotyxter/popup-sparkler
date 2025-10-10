@@ -34,6 +34,11 @@ export type PopupState = {
       fontSize: string;
       color: string;
     };
+    coupon: {
+      fontFamily: string;
+      fontSize: string;
+      color: string;
+    };
   };
 };
 
@@ -68,6 +73,11 @@ export const defaultPopupState: PopupState = {
       fontFamily: "Inter",
       fontSize: "16px",
       color: "#666666",
+    },
+    coupon: {
+      fontFamily: "Montserrat",
+      fontSize: "24px",
+      color: "#92400E",
     },
   },
 };

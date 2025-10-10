@@ -316,6 +316,102 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
                 </div>
               </div>
             </div>
+
+            <div className="border-b pb-4">
+              <h3 className="text-base font-semibold mb-4">Tipografia do Cupom</h3>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="coupon-font" className="text-sm font-medium">
+                    Fonte
+                  </Label>
+                  <Select
+                    value={state.typography.coupon.fontFamily}
+                    onValueChange={(value) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          coupon: { ...state.typography.coupon, fontFamily: value },
+                        },
+                      })
+                    }
+                  >
+                    <SelectTrigger id="coupon-font" className="h-12" style={{ fontFamily: state.typography.coupon.fontFamily }}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      {FONT_OPTIONS.map((font) => (
+                        <SelectItem 
+                          key={font} 
+                          value={font} 
+                          className="h-10 text-base cursor-pointer"
+                          style={{ fontFamily: font }}
+                        >
+                          {font}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="coupon-size" className="text-sm font-medium">
+                    Tamanho (px)
+                  </Label>
+                  <Input
+                    id="coupon-size"
+                    type="number"
+                    value={parseInt(state.typography.coupon.fontSize)}
+                    onChange={(e) =>
+                      onChange({
+                        typography: {
+                          ...state.typography,
+                          coupon: { ...state.typography.coupon, fontSize: `${e.target.value}px` },
+                        },
+                      })
+                    }
+                    placeholder="24"
+                    min="8"
+                    max="100"
+                    className="rounded-md"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="coupon-color" className="text-sm font-medium">
+                    Cor
+                  </Label>
+                  <div className="flex gap-3 items-center">
+                    <input
+                      id="coupon-color"
+                      type="color"
+                      value={state.typography.coupon.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            coupon: { ...state.typography.coupon, color: e.target.value },
+                          },
+                        })
+                      }
+                      className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                    />
+                    <Input
+                      value={state.typography.coupon.color}
+                      onChange={(e) =>
+                        onChange({
+                          typography: {
+                            ...state.typography,
+                            coupon: { ...state.typography.coupon, color: e.target.value },
+                          },
+                        })
+                      }
+                      placeholder="#92400E"
+                      className="flex-1 rounded-md"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Colors Section */}
