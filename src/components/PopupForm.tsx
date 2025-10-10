@@ -143,11 +143,76 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
         </TabsContent>
 
         <TabsContent value="styles" className="space-y-6">
-          <div className="p-4 bg-surface rounded-lg">
-            <p className="text-sm text-muted">
-              As cores e tipografia seguem o design system da Tyxter. Personalizações avançadas
-              podem ser feitas através do código.
-            </p>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="popup-bg" className="text-sm font-medium">
+                Cor de fundo do popup
+              </Label>
+              <div className="flex gap-3 items-center">
+                <input
+                  id="popup-bg"
+                  type="color"
+                  value={state.customColors.popupBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        popupBackground: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                />
+                <Input
+                  value={state.customColors.popupBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        popupBackground: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="#FFFFFF"
+                  className="flex-1 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cta-bg" className="text-sm font-medium">
+                Cor de fundo do botão
+              </Label>
+              <div className="flex gap-3 items-center">
+                <input
+                  id="cta-bg"
+                  type="color"
+                  value={state.customColors.ctaBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        ctaBackground: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                />
+                <Input
+                  value={state.customColors.ctaBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        ctaBackground: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="#2C928A"
+                  className="flex-1 rounded-md"
+                />
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

@@ -20,6 +20,11 @@ export type PopupState = {
   behavior: {
     showAfterSeconds: number;
   };
+
+  customColors: {
+    popupBackground: string;
+    ctaBackground: string;
+  };
 };
 
 export const defaultPopupState: PopupState = {
@@ -41,5 +46,9 @@ export const defaultPopupState: PopupState = {
   },
   behavior: {
     showAfterSeconds: 5,
+  },
+  customColors: {
+    popupBackground: "#FFFFFF",
+    ctaBackground: "#2C928A",
   },
 };

@@ -37,7 +37,10 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-card rounded-lg shadow-card overflow-hidden">
+    <div 
+      className="w-full max-w-md mx-auto rounded-lg shadow-card overflow-hidden"
+      style={{ backgroundColor: state.customColors.popupBackground }}
+    >
       {/* Headline */}
       <div className="p-6 pb-4">
         <h2 className="font-display font-extrabold text-2xl md:text-3xl leading-tight text-ink">
@@ -135,7 +138,13 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
         <Button
           onClick={handleCtaClick}
           disabled={!state.ctaUrl || isLoading}
-          className="w-full bg-primary hover:bg-primary-hover text-primary-foreground font-display font-bold text-base py-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full text-primary-foreground font-display font-bold text-base py-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ 
+            backgroundColor: state.customColors.ctaBackground,
+            ...(state.ctaUrl && !isLoading && {
+              '--tw-shadow': '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            })
+          } as React.CSSProperties}
           title={!state.ctaUrl ? "Informe a URL do produto" : ""}
         >
           {isLoading ? "Adicionando…" : state.ctaLabel}
