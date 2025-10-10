@@ -77,11 +77,12 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
             className="relative rounded-lg p-3 transition-all duration-300 cursor-pointer"
             style={{
               backgroundColor: state.customColors.couponBackground,
+              color: state.typography.coupon.color,
             }}
             onClick={handleCopy}
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="text-xs font-medium flex-shrink-0 text-ink">
+              <span className="text-xs font-medium flex-shrink-0">
                 Clique para copiar
               </span>
               <div 
@@ -89,7 +90,6 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 style={{
                   fontFamily: state.typography.coupon.fontFamily,
                   fontSize: state.typography.coupon.fontSize,
-                  color: state.typography.coupon.color,
                 }}
               >
                 {state.coupon.code.toUpperCase()}
@@ -103,9 +103,9 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 aria-label="Copiar código"
               >
                 {copied ? (
-                  <Check className="w-5 h-5 text-ink" />
+                  <Check className="w-5 h-5" />
                 ) : (
-                  <Copy className="w-5 h-5 text-ink" />
+                  <Copy className="w-5 h-5" />
                 )}
               </button>
             </div>
