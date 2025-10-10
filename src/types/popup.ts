@@ -24,6 +24,7 @@ export type PopupState = {
   customColors: {
     popupBackground: string;
     ctaBackground: string;
+    couponBackground: string;
   };
 };
 
@@ -50,5 +51,6 @@ export const defaultPopupState: PopupState = {
   customColors: {
     popupBackground: "#FFFFFF",
     ctaBackground: "#2C928A",
+    couponBackground: "#E6F4F1",
   },
 };

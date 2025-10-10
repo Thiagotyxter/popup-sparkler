@@ -213,6 +213,41 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
                 />
               </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="coupon-bg" className="text-sm font-medium">
+                Cor de fundo do cupom
+              </Label>
+              <div className="flex gap-3 items-center">
+                <input
+                  id="coupon-bg"
+                  type="color"
+                  value={state.customColors.couponBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        couponBackground: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                />
+                <Input
+                  value={state.customColors.couponBackground}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        couponBackground: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="#E6F4F1"
+                  className="flex-1 rounded-md"
+                />
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
