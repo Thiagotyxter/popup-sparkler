@@ -154,7 +154,11 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 className="flex-1 rounded-lg"
                 style={
                   purchaseType === "one-time"
-                    ? { backgroundColor: state.customColors.ctaBackground }
+                    ? { 
+                        backgroundColor: "#ffffff",
+                        color: "#000000",
+                        borderColor: "#e5e7eb"
+                      }
                     : {}
                 }
                 onClick={() => setPurchaseType("one-time")}
@@ -163,10 +167,12 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
               </Button>
               <Button
                 variant={purchaseType === "subscription" ? "default" : "outline"}
-                className="flex-1 rounded-lg"
+                className="flex-1 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white border-0"
                 style={
                   purchaseType === "subscription"
-                    ? { backgroundColor: state.customColors.ctaBackground }
+                    ? { 
+                        backgroundColor: "#10b981",
+                      }
                     : {}
                 }
                 onClick={() => setPurchaseType("subscription")}
@@ -218,21 +224,27 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
 
       {/* Pricing */}
       <div className="px-6 pb-4">
-        <div className="space-y-1">
-          <div className="flex items-baseline gap-3">
-            <span className="text-muted line-through text-sm">{state.priceOriginal}</span>
-            <span className="text-ink font-bold text-2xl">{getCurrentPrice()}</span>
+        <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+          <div className="text-center space-y-2">
+            <div className="text-4xl font-bold text-emerald-950 dark:text-emerald-50">
+              {getCurrentPrice()}
+            </div>
+            {state.enableSubscription && purchaseType === "subscription" && selectedPlan && (
+              <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
+              </p>
+            )}
+            {state.enableSubscription && purchaseType === "one-time" && selectedQuantity && (
+              <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade{state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity > 1 ? 's' : ''}
+              </p>
+            )}
+            {(!state.enableSubscription || (!selectedQuantity && !selectedPlan)) && (
+              <div className="text-sm text-muted line-through">
+                {state.priceOriginal}
+              </div>
+            )}
           </div>
-          {state.enableSubscription && purchaseType === "one-time" && selectedQuantity && (
-            <p className="text-xs text-muted-foreground">
-              {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade
-            </p>
-          )}
-          {state.enableSubscription && purchaseType === "subscription" && selectedPlan && (
-            <p className="text-xs text-muted-foreground">
-              por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
-            </p>
-          )}
         </div>
       </div>
 
