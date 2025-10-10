@@ -66,7 +66,7 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {state.applyCoupon && state.coupon.code && (
         <div className="px-6 pb-4">
           <div
-            className="relative rounded-lg border-2 border-dashed border-border p-3 transition-all duration-300 hover:border-primary cursor-pointer"
+            className="relative rounded-lg p-3 transition-all duration-300 cursor-pointer"
             style={{
               backgroundColor: state.customColors.couponBackground,
               color: state.customColors.couponTextColor,
