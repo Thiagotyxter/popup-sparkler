@@ -8,51 +8,39 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Tyxter Premium Design System */
+    /* Tyxter Design System */
     --background: 0 0% 100%;
-    --foreground: 0 0% 10.2%; /* #1a1a1a */
+    --foreground: 0 0% 6.7%; /* #111111 */
     
-    --surface: 220 25% 98%; /* #f8f9fb */
-    --ink: 0 0% 10.2%; /* #1a1a1a */
+    --surface: 180 20% 97.3%; /* #F7F9F9 */
+    --ink: 0 0% 6.7%; /* #111111 */
     --muted: 0 0% 40%; /* #666666 */
-    --muted-light: 220 16% 58%; /* #8590a2 */
     
-    /* Tyxter Blue Palette */
-    --tyxter-blue: 220 96% 52.9%; /* #165af5 */
-    --tyxter-blue-light: 207 80% 64.1%; /* #5da6ed */
-    --tyxter-blue-bg: 220 100% 96%; /* #e9f1ff */
-    --tyxter-blue-hover: 220 96% 45%; /* #0d4fd4 */
-    
-    --color-primary: 220 96% 52.9%; /* Tyxter Blue */
-    --color-primary-hover: 220 96% 45%;
+    --color-primary: 173 58% 34.9%; /* #2C928A */
+    --color-primary-hover: 173 58% 27.5%; /* #1F6E68 */
     --primary-foreground: 0 0% 100%;
     
-    --coupon-bg: 45 100% 95%; /* #fff4e1 */
-    --coupon-ink: 30 80% 35%; /* #9e5b1f */
-    
-    --success: 142 71% 45%; /* #22c55e */
-    --success-light: 142 76% 96%; /* #f0fdf4 */
+    --coupon-bg: 168 50% 92.4%; /* #E6F4F1 */
+    --coupon-ink: 173 58% 27.5%; /* #1F6E68 */
     
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10.2%;
+    --card-foreground: 0 0% 6.7%;
     
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10.2%;
+    --popover: 40 50% 95%;
+    --popover-foreground: 0 0% 6.7%;
     
-    --accent: 220 25% 96%;
-    --accent-foreground: 0 0% 10.2%;
+    --accent: 40 50% 92%;
+    --accent-foreground: 0 0% 6.7%;
     
-    --border: 220 13% 91%; /* #e5e7eb */
-    --input: 220 13% 91%;
-    --ring: 220 96% 52.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 173 58% 34.9%;
     
-    --radius: 1rem; /* 16px - rounded-2xl */
-    --radius-lg: 1.5rem; /* 24px */
-    --radius-sm: 0.75rem;
+    --radius: 0.75rem;
+    --radius-sm: 0.625rem;
     
-    --shadow-premium: 0 4px 16px rgba(0, 0, 0, 0.08);
     --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.05);
-    --shadow-hover: 0 8px 24px 0 rgb(0 0 0 / 0.12);
+    --shadow-hover: 0 4px 12px 0 rgb(0 0 0 / 0.08);
   }
 }
 
