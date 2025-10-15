@@ -228,7 +228,10 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       <div className="px-6 pb-4">
         {state.enableSubscription && (selectedQuantity || selectedPlan) ? (
           // Box display for kits/subscriptions
-          <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+          <div 
+            className="rounded-xl p-6 border"
+            style={{ backgroundColor: state.customColors.priceBoxBackground }}
+          >
             <div className="text-center space-y-2">
               <div className="text-4xl font-bold text-emerald-950 dark:text-emerald-50">
                 {getCurrentPrice()}
