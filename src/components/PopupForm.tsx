@@ -883,6 +883,41 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
                 />
               </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="price-box-text" className="text-sm font-medium">
+                Cor do texto da box (Kits/Assinaturas)
+              </Label>
+              <div className="flex gap-3 items-center">
+                <input
+                  id="price-box-text"
+                  type="color"
+                  value={state.customColors.priceBoxTextColor}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        priceBoxTextColor: e.target.value,
+                      },
+                    })
+                  }
+                  className="w-16 h-10 rounded-md cursor-pointer border border-border"
+                />
+                <Input
+                  value={state.customColors.priceBoxTextColor}
+                  onChange={(e) =>
+                    onChange({
+                      customColors: {
+                        ...state.customColors,
+                        priceBoxTextColor: e.target.value,
+                      },
+                    })
+                  }
+                  placeholder="#065F46"
+                  className="flex-1 rounded-md"
+                />
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>

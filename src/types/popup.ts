@@ -46,6 +46,7 @@ export type PopupState = {
     couponBackground: string;
     couponTextColor: string;
     priceBoxBackground: string;
+    priceBoxTextColor: string;
   };
 
   typography: {
@@ -93,6 +94,7 @@ export const defaultPopupState: PopupState = {
     couponBackground: "#FEF3C7",
     couponTextColor: "#92400E",
     priceBoxBackground: "#D1FAE5",
+    priceBoxTextColor: "#065F46",
   },
   typography: {
     title: {

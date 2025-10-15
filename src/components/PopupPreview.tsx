@@ -233,16 +233,25 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
             style={{ backgroundColor: state.customColors.priceBoxBackground }}
           >
             <div className="text-center space-y-2">
-              <div className="text-4xl font-bold text-emerald-950 dark:text-emerald-50">
+              <div 
+                className="text-4xl font-bold"
+                style={{ color: state.customColors.priceBoxTextColor }}
+              >
                 {getCurrentPrice()}
               </div>
               {purchaseType === "subscription" && selectedPlan && (
-                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                <p 
+                  className="text-sm"
+                  style={{ color: state.customColors.priceBoxTextColor }}
+                >
                   por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
                 </p>
               )}
               {purchaseType === "one-time" && selectedQuantity && (
-                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                <p 
+                  className="text-sm"
+                  style={{ color: state.customColors.priceBoxTextColor }}
+                >
                   {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade{state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity > 1 ? 's' : ''}
                 </p>
               )}
