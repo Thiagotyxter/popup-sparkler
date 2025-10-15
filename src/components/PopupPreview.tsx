@@ -257,7 +257,7 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
               </span>
             </div>
             <div className="text-right">
-              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+              <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                 {(() => {
                   const original = parseFloat(state.priceOriginal.replace(/[^\d,]/g, '').replace(',', '.'));
                   const discount = parseFloat(state.priceDiscount.replace(/[^\d,]/g, '').replace(',', '.'));
