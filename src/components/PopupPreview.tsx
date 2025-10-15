@@ -226,28 +226,51 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
 
       {/* Pricing */}
       <div className="px-6 pb-4">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
-          <div className="text-center space-y-2">
-            <div className="text-4xl font-bold text-emerald-950 dark:text-emerald-50">
-              {getCurrentPrice()}
-            </div>
-            {state.enableSubscription && purchaseType === "subscription" && selectedPlan && (
-              <p className="text-sm text-emerald-700 dark:text-emerald-300">
-                por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
-              </p>
-            )}
-            {state.enableSubscription && purchaseType === "one-time" && selectedQuantity && (
-              <p className="text-sm text-emerald-700 dark:text-emerald-300">
-                {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade{state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity > 1 ? 's' : ''}
-              </p>
-            )}
-            {(!state.enableSubscription || (!selectedQuantity && !selectedPlan)) && (
-              <div className="text-sm text-muted line-through">
-                {state.priceOriginal}
+        {state.enableSubscription && (selectedQuantity || selectedPlan) ? (
+          // Box display for kits/subscriptions
+          <div className="bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+            <div className="text-center space-y-2">
+              <div className="text-4xl font-bold text-emerald-950 dark:text-emerald-50">
+                {getCurrentPrice()}
               </div>
-            )}
+              {purchaseType === "subscription" && selectedPlan && (
+                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                  por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
+                </p>
+              )}
+              {purchaseType === "one-time" && selectedQuantity && (
+                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                  {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade{state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity > 1 ? 's' : ''}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          // Layout simples para produtos sem kits/assinaturas
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-sm text-gray-500 line-through mb-1">
+                {state.priceOriginal}
+              </span>
+              <span className="text-4xl font-bold text-gray-900 dark:text-gray-50">
+                {state.priceDiscount}
+              </span>
+            </div>
+            <div className="text-right">
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                {(() => {
+                  const original = parseFloat(state.priceOriginal.replace(/[^\d,]/g, '').replace(',', '.'));
+                  const discount = parseFloat(state.priceDiscount.replace(/[^\d,]/g, '').replace(',', '.'));
+                  if (original && discount && original > discount) {
+                    const percentage = ((original - discount) / original * 100).toFixed(2);
+                    return `${percentage}% DE DESCONTO`;
+                  }
+                  return '';
+                })()}
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* CTA */}

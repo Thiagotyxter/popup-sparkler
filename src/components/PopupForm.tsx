@@ -101,6 +101,32 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
           </div>
 
           <div className="space-y-2">
+            <Label htmlFor="price-original" className="text-sm font-medium">
+              Preço do produto
+            </Label>
+            <Input
+              id="price-original"
+              value={state.priceOriginal}
+              onChange={(e) => onChange({ priceOriginal: e.target.value })}
+              placeholder="R$ 209,80"
+              className="rounded-md"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="price-discount" className="text-sm font-medium">
+              Preço promocional
+            </Label>
+            <Input
+              id="price-discount"
+              value={state.priceDiscount}
+              onChange={(e) => onChange({ priceDiscount: e.target.value })}
+              placeholder="R$ 144,80"
+              className="rounded-md"
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label htmlFor="show-after" className="text-sm font-medium">
               Mostrar popup após (segundos)
             </Label>
