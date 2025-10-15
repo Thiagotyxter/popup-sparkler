@@ -251,20 +251,37 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
               >
                 {getCurrentPrice()}
               </div>
+              {purchaseType === "one-time" && selectedQuantity && (() => {
+                const option = state.quantityOptions.find(o => o.id === selectedQuantity);
+                const quantity = option?.quantity || 1;
+                const totalPrice = option?.price ? parseFloat(option.price.replace(/[^\d,]/g, '').replace(',', '.')) : 0;
+                const pricePerUnit = quantity > 1 && totalPrice ? (totalPrice / quantity).toFixed(2).replace('.', ',') : null;
+                
+                return (
+                  <>
+                    {pricePerUnit && (
+                      <p 
+                        className="text-sm font-medium"
+                        style={{ color: state.customColors.priceBoxTextColor }}
+                      >
+                        (Preço por unidade: R$ {pricePerUnit})
+                      </p>
+                    )}
+                    <p 
+                      className="text-sm"
+                      style={{ color: state.customColors.priceBoxTextColor }}
+                    >
+                      {quantity} unidade{quantity > 1 ? 's' : ''}
+                    </p>
+                  </>
+                );
+              })()}
               {purchaseType === "subscription" && selectedPlan && (
                 <p 
                   className="text-sm"
                   style={{ color: state.customColors.priceBoxTextColor }}
                 >
                   por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
-                </p>
-              )}
-              {purchaseType === "one-time" && selectedQuantity && (
-                <p 
-                  className="text-sm"
-                  style={{ color: state.customColors.priceBoxTextColor }}
-                >
-                  {state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity} unidade{state.quantityOptions.find(o => o.id === selectedQuantity)?.quantity > 1 ? 's' : ''}
                 </p>
               )}
             </div>
