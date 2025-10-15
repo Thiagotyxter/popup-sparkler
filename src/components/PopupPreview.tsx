@@ -104,30 +104,40 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {state.applyCoupon && state.coupon.code && (
         <div className="px-6 pb-4">
           <div
-            className={`relative rounded-lg p-3 transition-all duration-300 cursor-pointer ${
-              copied ? 'animate-[scale-in_0.2s_ease-out] shadow-lg' : ''
+            className={`relative rounded-xl p-4 transition-all duration-300 cursor-pointer border-2 ${
+              copied ? 'animate-[scale-in_0.2s_ease-out] shadow-lg scale-105' : 'hover:shadow-md'
             }`}
             style={{
               backgroundColor: state.customColors.couponBackground,
               color: state.typography.coupon.color,
+              borderColor: state.typography.coupon.color + '20',
             }}
             onClick={handleCopy}
+            title={state.coupon.code.toUpperCase()}
           >
-            <div className="flex items-center justify-between gap-3">
-              <span className="text-xs font-medium flex-shrink-0">
-                Clique para copiar
+            <div className="flex items-center justify-between gap-4">
+              <span 
+                className="text-xs font-medium flex-shrink-0"
+                style={{ 
+                  fontFamily: 'Montserrat, sans-serif',
+                }}
+              >
+                {copied ? '✓ Copiado!' : 'Clique para copiar'}
               </span>
               <div 
-                className="font-bold tracking-wider text-center flex-1"
+                className="font-bold tracking-wider text-center flex-1 min-w-0"
                 style={{
                   fontFamily: state.typography.coupon.fontFamily,
-                  fontSize: state.typography.coupon.fontSize,
+                  fontSize: `clamp(12px, 2vw, ${state.typography.coupon.fontSize})`,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               >
                 {state.coupon.code.toUpperCase()}
               </div>
               <button
-                className="flex-shrink-0 transition-transform hover:scale-110"
+                className="flex-shrink-0 transition-transform hover:scale-110 active:scale-95"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCopy();
@@ -135,7 +145,7 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 aria-label="Copiar código"
               >
                 {copied ? (
-                  <Check className="w-5 h-5" />
+                  <Check className="w-5 h-5 animate-scale-in" />
                 ) : (
                   <Copy className="w-5 h-5" />
                 )}

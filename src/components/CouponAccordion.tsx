@@ -40,8 +40,12 @@ export const CouponAccordion = ({ state, onChange }: CouponAccordionProps) => {
                 })
               }
               placeholder="TYXTER10"
+              maxLength={20}
               className="rounded-md"
             />
+            <p className="text-xs text-muted-foreground">
+              Máximo de 20 caracteres
+            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
