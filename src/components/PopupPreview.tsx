@@ -104,7 +104,9 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {state.applyCoupon && state.coupon.code && (
         <div className="px-6 pb-4">
           <div
-            className="relative rounded-lg p-3 transition-all duration-300 cursor-pointer"
+            className={`relative rounded-lg p-3 transition-all duration-300 cursor-pointer ${
+              copied ? 'animate-[scale-in_0.2s_ease-out] shadow-lg' : ''
+            }`}
             style={{
               backgroundColor: state.customColors.couponBackground,
               color: state.typography.coupon.color,
