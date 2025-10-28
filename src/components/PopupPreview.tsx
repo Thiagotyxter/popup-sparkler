@@ -163,30 +163,23 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
       {/* Variant Selector */}
       {state.enableVariants && state.variants.filter(v => v.isActive).length > 0 && (
         <div className="px-6 pb-4 space-y-2">
-          <Label className="text-sm font-medium">Escolha uma variante:</Label>
-          <div className="grid grid-cols-2 gap-2">
-            {state.variants
-              .filter(v => v.isActive)
-              .map((variant) => (
-                <Button
-                  key={variant.id}
-                  variant={selectedVariant === variant.id ? "default" : "outline"}
-                  className="w-full rounded-lg text-sm"
-                  style={
-                    selectedVariant === variant.id
-                      ? { 
-                          backgroundColor: state.customColors.ctaBackground,
-                          color: "#ffffff",
-                          border: "none"
-                        }
-                      : {}
-                  }
-                  onClick={() => setSelectedVariant(variant.id)}
-                >
-                  {variant.name}
-                </Button>
-              ))}
-          </div>
+          <Label className="text-sm font-medium">
+            {state.variantLabel ? `Escolha o ${state.variantLabel.toLowerCase()}:` : 'Escolha uma variante:'}
+          </Label>
+          <Select value={selectedVariant} onValueChange={setSelectedVariant}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder={`Selecione ${state.variantLabel ? state.variantLabel.toLowerCase() : 'uma opção'}`} />
+            </SelectTrigger>
+            <SelectContent>
+              {state.variants
+                .filter(v => v.isActive)
+                .map((variant) => (
+                  <SelectItem key={variant.id} value={variant.id}>
+                    {variant.name}
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
         </div>
       )}
 

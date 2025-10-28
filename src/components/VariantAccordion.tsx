@@ -51,6 +51,25 @@ export const VariantAccordion = ({ state, onChange }: VariantAccordionProps) => 
       </div>
 
       {state.enableVariants && (
+        <>
+          <div className="space-y-2">
+            <Label className="text-sm font-medium">
+              Título do menu de variantes
+            </Label>
+            <Input
+              value={state.variantLabel}
+              onChange={(e) => onChange({ variantLabel: e.target.value })}
+              placeholder="Ex: Sabor, Cor, Tamanho..."
+              maxLength={30}
+            />
+            <p className="text-xs text-muted-foreground">
+              Este será o nome exibido no dropdown (Ex: "Escolha o sabor")
+            </p>
+          </div>
+        </>
+      )}
+
+      {state.enableVariants && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm text-muted-foreground">

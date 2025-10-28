@@ -38,6 +38,7 @@ export type PopupState = {
 
   // Variantes
   enableVariants: boolean;
+  variantLabel: string;
   variants: Variant[];
 
   // Kits e Assinaturas
@@ -92,6 +93,7 @@ export const defaultPopupState: PopupState = {
     code: "TYXTER10",
   },
   enableVariants: false,
+  variantLabel: "Sabor",
   variants: [],
   enableSubscription: false,
   enableOneTimePurchase: true,
