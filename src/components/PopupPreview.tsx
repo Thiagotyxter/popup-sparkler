@@ -12,6 +12,7 @@ interface PopupPreviewProps {
 export const PopupPreview = ({ state }: PopupPreviewProps) => {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState<string>("");
   const [purchaseType, setPurchaseType] = useState<"one-time" | "subscription">(
     state.enableOneTimePurchase ? "one-time" : "subscription"
   );
@@ -27,7 +28,11 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
   const handleCtaClick = () => {
     let url = state.ctaUrl;
     
-    if (state.enableSubscription) {
+    // Prioridade: variante > kit/assinatura
+    if (state.enableVariants && selectedVariant) {
+      const variant = state.variants.find(v => v.id === selectedVariant);
+      url = variant?.url || state.ctaUrl;
+    } else if (state.enableSubscription) {
       if (purchaseType === "one-time" && selectedQuantity) {
         const option = state.quantityOptions.find(o => o.id === selectedQuantity);
         url = option?.checkoutUrl || state.ctaUrl;
@@ -151,6 +156,36 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
                 )}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Variant Selector */}
+      {state.enableVariants && state.variants.filter(v => v.isActive).length > 0 && (
+        <div className="px-6 pb-4 space-y-2">
+          <Label className="text-sm font-medium">Escolha uma variante:</Label>
+          <div className="grid grid-cols-2 gap-2">
+            {state.variants
+              .filter(v => v.isActive)
+              .map((variant) => (
+                <Button
+                  key={variant.id}
+                  variant={selectedVariant === variant.id ? "default" : "outline"}
+                  className="w-full rounded-lg text-sm"
+                  style={
+                    selectedVariant === variant.id
+                      ? { 
+                          backgroundColor: state.customColors.ctaBackground,
+                          color: "#ffffff",
+                          border: "none"
+                        }
+                      : {}
+                  }
+                  onClick={() => setSelectedVariant(variant.id)}
+                >
+                  {variant.name}
+                </Button>
+              ))}
           </div>
         </div>
       )}

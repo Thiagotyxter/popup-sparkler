@@ -1,3 +1,10 @@
+export type Variant = {
+  id: string;
+  name: string;
+  url: string;
+  isActive: boolean;
+};
+
 export type QuantityOption = {
   id: string;
   quantity: number;
@@ -28,6 +35,10 @@ export type PopupState = {
   coupon: {
     code: string;
   };
+
+  // Variantes
+  enableVariants: boolean;
+  variants: Variant[];
 
   // Kits e Assinaturas
   enableSubscription: boolean;
@@ -80,6 +91,8 @@ export const defaultPopupState: PopupState = {
   coupon: {
     code: "TYXTER10",
   },
+  enableVariants: false,
+  variants: [],
   enableSubscription: false,
   enableOneTimePurchase: true,
   quantityOptions: [],

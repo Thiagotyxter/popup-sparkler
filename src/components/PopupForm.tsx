@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Plus, Trash2 } from "lucide-react";
 import { CouponAccordion } from "./CouponAccordion";
+import { VariantAccordion } from "./VariantAccordion";
 
 const FONT_OPTIONS = [
   "Abel", "Abril Fatface", "Alegreya", "Alegreya Sans", "Amatic SC", "Arvo",
@@ -39,8 +40,9 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
   return (
     <div className="h-full overflow-y-auto">
       <Tabs defaultValue="content" className="w-full">
-        <TabsList className="w-full grid grid-cols-4 mb-6">
+        <TabsList className="w-full grid grid-cols-5 mb-6">
           <TabsTrigger value="content">Conteúdo</TabsTrigger>
+          <TabsTrigger value="variant">Variante</TabsTrigger>
           <TabsTrigger value="kits">Kits</TabsTrigger>
           <TabsTrigger value="coupon">Cupom</TabsTrigger>
           <TabsTrigger value="styles">Estilos</TabsTrigger>
@@ -443,6 +445,10 @@ export const PopupForm = ({ state, onChange }: PopupFormProps) => {
               </div>
             </>
           )}
+        </TabsContent>
+
+        <TabsContent value="variant" className="space-y-4">
+          <VariantAccordion state={state} onChange={onChange} />
         </TabsContent>
 
         <TabsContent value="coupon" className="space-y-4">
