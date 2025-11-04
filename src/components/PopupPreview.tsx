@@ -266,80 +266,48 @@ export const PopupPreview = ({ state }: PopupPreviewProps) => {
 
       {/* Pricing */}
       <div className="px-6 pb-4">
-        {state.enableSubscription && (selectedQuantity || selectedPlan) ? (
-          // Box display for kits/subscriptions
-          <div 
-            className="rounded-xl p-6 border"
-            style={{ backgroundColor: state.customColors.priceBoxBackground }}
-          >
-            <div className="text-center space-y-2">
-              <div 
-                className="text-4xl font-bold"
-                style={{ color: state.customColors.priceBoxTextColor }}
-              >
-                {getCurrentPrice()}
-              </div>
-              {purchaseType === "one-time" && selectedQuantity && (() => {
-                const option = state.quantityOptions.find(o => o.id === selectedQuantity);
-                const quantity = option?.quantity || 1;
-                const totalPrice = option?.price ? parseFloat(option.price.replace(/[^\d,]/g, '').replace(',', '.')) : 0;
-                const pricePerUnit = quantity > 1 && totalPrice ? (totalPrice / quantity).toFixed(2).replace('.', ',') : null;
-                
-                return (
-                  <>
-                    {pricePerUnit && (
-                      <p 
-                        className="text-sm font-medium"
-                        style={{ color: state.customColors.priceBoxTextColor }}
-                      >
-                        (Preço por unidade: R$ {pricePerUnit})
-                      </p>
-                    )}
-                    <p 
-                      className="text-sm"
-                      style={{ color: state.customColors.priceBoxTextColor }}
-                    >
-                      {quantity} unidade{quantity > 1 ? 's' : ''}
-                    </p>
-                  </>
-                );
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-1">
+            <span className="text-sm text-gray-500 line-through">
+              {state.priceOriginal}
+            </span>
+            <span className="text-4xl font-bold text-gray-900 dark:text-gray-50">
+              {getCurrentPrice()}
+            </span>
+            {/* Informações adicionais para kits */}
+            {purchaseType === "one-time" && selectedQuantity && (() => {
+              const option = state.quantityOptions.find(o => o.id === selectedQuantity);
+              const quantity = option?.quantity || 1;
+              const totalPrice = option?.price ? parseFloat(option.price.replace(/[^\d,]/g, '').replace(',', '.')) : 0;
+              const pricePerUnit = quantity > 1 && totalPrice ? (totalPrice / quantity).toFixed(2).replace('.', ',') : null;
+              
+              return pricePerUnit ? (
+                <span className="text-xs text-gray-500">
+                  R$ {pricePerUnit}/unidade • {quantity} unidade{quantity > 1 ? 's' : ''}
+                </span>
+              ) : null;
+            })()}
+            {/* Informações adicionais para assinaturas */}
+            {purchaseType === "subscription" && selectedPlan && (
+              <span className="text-xs text-gray-500">
+                por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
+              </span>
+            )}
+          </div>
+          <div className="text-right">
+            <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+              {(() => {
+                const original = parseFloat(state.priceOriginal.replace(/[^\d,]/g, '').replace(',', '.'));
+                const discount = parseFloat(state.priceDiscount.replace(/[^\d,]/g, '').replace(',', '.'));
+                if (original && discount && original > discount) {
+                  const percentage = ((original - discount) / original * 100).toFixed(2);
+                  return `${percentage}% DE DESCONTO`;
+                }
+                return '';
               })()}
-              {purchaseType === "subscription" && selectedPlan && (
-                <p 
-                  className="text-sm"
-                  style={{ color: state.customColors.priceBoxTextColor }}
-                >
-                  por {state.subscriptionPlans.find(p => p.id === selectedPlan)?.interval.toLowerCase()}
-                </p>
-              )}
-            </div>
+            </span>
           </div>
-        ) : (
-          // Layout simples para produtos sem kits/assinaturas
-          <div className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <span className="text-sm text-gray-500 line-through mb-1">
-                {state.priceOriginal}
-              </span>
-              <span className="text-4xl font-bold text-gray-900 dark:text-gray-50">
-                {state.priceDiscount}
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                {(() => {
-                  const original = parseFloat(state.priceOriginal.replace(/[^\d,]/g, '').replace(',', '.'));
-                  const discount = parseFloat(state.priceDiscount.replace(/[^\d,]/g, '').replace(',', '.'));
-                  if (original && discount && original > discount) {
-                    const percentage = ((original - discount) / original * 100).toFixed(2);
-                    return `${percentage}% DE DESCONTO`;
-                  }
-                  return '';
-                })()}
-              </span>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
 
       {/* CTA */}
